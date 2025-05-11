@@ -1,4 +1,7 @@
 #pragma once
+#include<graphics.h>
+#include<vector>
+using namespace std;
 typedef enum {
 	CHESS_WHITE = -1,  // 白方
 	CHESS_BLACK = 1    // 黑方
@@ -12,6 +15,8 @@ struct ChessPos {
 class Chess
 {
 public:
+	//利用构造函数初始化
+	Chess(int gradeSize, int marginX, int marginY, float chessSize);
 	// 棋盘的初始化
 	void init();
 
@@ -31,5 +36,15 @@ public:
 
 	// 判断棋局是否结束
 	bool checkOver();
+private:
+	IMAGE chessBlackImg;
+	IMAGE chessWhiteImg;
+	int gradeSize;//棋盘大小（13，15，17，19）
+	int margin_x;//棋盘左侧边界大小
+	int margin_y;//棋盘上边缘大小
+	float chessSize;//棋子大小，即格子大小
+	//表示当前棋局上棋子的分布情况.0为空白；1为黑子；-1为白子
+	vector<vector<int>>chessMap;//如chessMap[3][5]表示棋盘第三行第五列的落子情况
+	bool playerFlag;//表示现在该哪一方落子，true:该黑棋落子； flase:该白棋落子
 };
 
