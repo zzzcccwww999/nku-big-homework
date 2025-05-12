@@ -46,5 +46,6 @@ private:
 	//表示当前棋局上棋子的分布情况.0为空白；1为黑子；-1为白子
 	vector<vector<int>>chessMap;//如chessMap[3][5]表示棋盘第三行第五列的落子情况
 	bool playerFlag;//表示现在该哪一方落子，true:该黑棋落子； flase:该白棋落子
+	void updateGameMap(ChessPos* pos);
 };
 

@@ -2,6 +2,42 @@
 #include<mmsystem.h>
 #include<math.h>
 #pragma comment(lib,"winmm.lib")
+//使图片边缘透明化的接口
+void putimagePNG(int x, int y, IMAGE* picture)
+{
+	// 变量初始化
+	DWORD* dst = GetImageBuffer();    // GetImageBuffer()函数，用于获取绘图设备的显存指针
+	DWORD* draw = GetImageBuffer();
+	DWORD* src = GetImageBuffer(picture); //获取picture
+	int picture_width = picture->getwidth(); //获取picture的宽度
+	int picture_height = picture->getheight(); //获取picture的高度
+	int graphWidth = getwidth();       //获取绘图区的宽度
+	int graphHeight = getheight();     //获取绘图区的高度
+	int dstX = 0;    //在显存里像素的角标
+
+	// 实现透明贴图 公式： Cp=αp*FP+(1-αp)*BP ， 贝叶斯定理来进行点颜色的概率计算
+	for (int iy = 0; iy < picture_height; iy++)
+	{
+		for (int ix = 0; ix < picture_width; ix++)
+		{
+			int srcX = ix + iy * picture_width; //在显存里像素的角标
+			int sa = ((src[srcX] & 0xff000000) >> 24); //0xAArrggbb;AA是透明度
+			int sr = ((src[srcX] & 0xff0000) >> 16); //获取RGB里的R
+			int sg = ((src[srcX] & 0xff00) >> 8);   
+			int sb = src[srcX] & 0xff;              
+			if (ix >= 0 && ix <= graphWidth && iy >= 0 && iy <= graphHeight && dstX <= graphWidth * graphHeight)
+			{
+				dstX = (ix + x) + (iy + y) * graphWidth; //在显存里像素的角标
+				int dr = ((dst[dstX] & 0xff0000) >> 16);
+				int dg = ((dst[dstX] & 0xff00) >> 8);
+				int db = dst[dstX] & 0xff;
+				draw[dstX] = ((sr * sa / 255 + dr * (255 - sa) / 255) << 16)  
+					| ((sg * sa / 255 + dg * (255 - sa) / 255) << 8)         
+					| (sb * sa / 255 + db * (255 - sa) / 255);              
+			}
+		}
+	}
+}
 
 Chess::Chess(int gradeSize, int marginX, int marginY, float chessSize)
 {
@@ -102,8 +138,18 @@ bool Chess::clickBoard(int x, int y, ChessPos* pos)
 }
 
 
-void Chess::chessDown(ChessPos * pos, chess_kind_t kind)
+void Chess::chessDown(ChessPos * pos, chess_kind_t kind)//实现落子功能
 {
+	int x = margin_x + chessSize * pos->col - 0.5 * chessSize;
+	int y = margin_y + chessSize * pos->row - 0.5 * chessSize;
+	//判断下黑棋还是白棋
+	if (kind == CHESS_WHITE) {
+		putimagePNG(x, y, &chessWhiteImg);
+	}
+	else {
+		putimagePNG(x, y, &chessBlackImg);
+	}
+	updateGameMap(pos);
 }
 
 int Chess::getGradeSize()
@@ -124,4 +170,10 @@ int Chess::getChessData(int row, int col)
 bool Chess::checkOver()
 {
 	return false;
+}
+
+void Chess::updateGameMap(ChessPos* pos)
+{
+	chessMap[pos->row][pos->col] = playerFlag ? CHESS_BLACK : CHESS_WHITE;
+	playerFlag = !playerFlag;//实现黑白方交换
 }

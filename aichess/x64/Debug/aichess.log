@@ -1,2 +1,27 @@
-﻿  Man.cpp
+﻿  AI.cpp
+  Chess.cpp
+C:\Users\21717\source\repos\aichess\Chess.cpp(67,56): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(67,45): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(68,56): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(68,45): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(83,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(84,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(85,18): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(86,18): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(87,13): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(91,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(101,10): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(103,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(114,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(115,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(125,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(126,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(127,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(143,8): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+C:\Users\21717\source\repos\aichess\Chess.cpp(144,8): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+  ChessGame.cpp
+  Man.cpp
+  源.cpp
+C:\Users\21717\source\repos\aichess\源.cpp(7,23): warning C4305: “参数”: 从“double”到“float”截断
+  正在生成代码...
   aichess.vcxproj -> C:\Users\21717\source\repos\aichess\x64\Debug\aichess.exe

@@ -16,7 +16,7 @@ void Man::go()
 		break;
 	}
 	}
-	printf("%d,%d\n", pos.row, pos.col);
+	//printf("%d,%d\n", pos.row, pos.col);
 	//Âä×Ó
 	chess->chessDown(&pos, CHESS_BLACK);
 }
