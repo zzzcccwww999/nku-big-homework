@@ -2,6 +2,7 @@
 #include<mmsystem.h>
 #include<math.h>
 #pragma comment(lib,"winmm.lib")
+#include<conio.h>
 //使图片边缘透明化的接口
 void putimagePNG(int x, int y, IMAGE* picture)
 {
@@ -140,6 +141,7 @@ bool Chess::clickBoard(int x, int y, ChessPos* pos)
 
 void Chess::chessDown(ChessPos * pos, chess_kind_t kind)//实现落子功能
 {
+	mciSendString("play res/down7.WAV", 0, 0, 0);
 	int x = margin_x + chessSize * pos->col - 0.5 * chessSize;
 	int y = margin_y + chessSize * pos->row - 0.5 * chessSize;
 	//判断下黑棋还是白棋
@@ -154,26 +156,95 @@ void Chess::chessDown(ChessPos * pos, chess_kind_t kind)//实现落子功能
 
 int Chess::getGradeSize()
 {
-	return 0;
+	return gradeSize;
 }
 
 int Chess::getChessData(ChessPos* pos)
 {
-	return 0;
+	return chessMap[pos->row][pos->col];
 }
 
 int Chess::getChessData(int row, int col)
 {
-	return 0;
+	return chessMap[row][col];
 }
 
 bool Chess::checkOver()
 {
+	if (checkWin()) {
+		Sleep(1500);//停顿
+		if (playerFlag == false) {
+			//说明该白子走棋，刚刚走起的是黑子，棋手胜利
+			mciSendString("play res/不错.mp3", 0, 0, 0);
+			loadimage(0,"res/胜利.jpg");
+		}
+		else {
+			mciSendString("play res/失败.mp3", 0, 0, 0);
+			loadimage(0, "res/失败.jpg");
+		}
+		_getch();//暂停
+		return true;
+	}
 	return false;
 }
 
 void Chess::updateGameMap(ChessPos* pos)
 {
+	lastPos = *pos;
 	chessMap[pos->row][pos->col] = playerFlag ? CHESS_BLACK : CHESS_WHITE;
 	playerFlag = !playerFlag;//实现黑白方交换
+}
+
+bool Chess::checkWin()
+{
+	int row = lastPos.row;
+	int col = lastPos.col;
+	//先判断水平方向
+	for (int i = 0;i < 5;i++) {
+		if (col - i >= 0 &&
+			col - i + 4 < gradeSize &&
+			chessMap[row][col - i] == chessMap[row][col - i + 1] &&
+			chessMap[row][col - i] == chessMap[row][col - i + 2] &&
+			chessMap[row][col - i] == chessMap[row][col - i + 3] &&
+			chessMap[row][col - i] == chessMap[row][col - i + 4])
+			return true;
+	}
+	//垂直方向
+	for (int i = 0;i < 5;i++) {
+		if (row - i >= 0 &&
+			row - i + 4 < gradeSize &&
+			chessMap[row - i][col] == chessMap[row - i + 1][col] &&
+			chessMap[row - i][col] == chessMap[row - i + 2][col] &&
+			chessMap[row - i][col] == chessMap[row - i + 3][col] &&
+			chessMap[row - i][col] == chessMap[row - i + 4][col])
+			return true;
+	}
+	//"/"方向
+	for (int i = 0; i < 5; i++)
+	{
+		if (row + i < gradeSize &&
+			row + i - 4 >= 0 &&
+			col - i >= 0 &&
+			col - i + 4 < gradeSize &&
+			chessMap[row + i][col - i] == chessMap[row + i - 1][col - i + 1] &&
+			chessMap[row + i][col - i] == chessMap[row + i - 2][col - i + 2] &&
+			chessMap[row + i][col - i] == chessMap[row + i - 3][col - i + 3] &&
+			chessMap[row + i][col - i] == chessMap[row + i - 4][col - i + 4])
+			return true;
+	}
+
+	//“\”方向
+	for (int i = 0; i < 5; i++)
+	{
+		if (row - i >= 0 &&
+			row - i + 4 < gradeSize &&
+			col - i >= 0 &&
+			col - i + 4 < gradeSize &&
+			chessMap[row - i][col - i] == chessMap[row - i + 1][col - i + 1] &&
+			chessMap[row - i][col - i] == chessMap[row - i + 2][col - i + 2] &&
+			chessMap[row - i][col - i] == chessMap[row - i + 3][col - i + 3] &&
+			chessMap[row - i][col - i] == chessMap[row - i + 4][col - i + 4])
+			return true;
+	}
+	return false;
 }

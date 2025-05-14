@@ -10,6 +10,8 @@ typedef enum {
 struct ChessPos {
 	int row;
 	int col;
+	//利用构造函数进行初始化
+	ChessPos(int r=0,int c=0):row(r),col(c){}
 };
 
 class Chess
@@ -47,5 +49,7 @@ private:
 	vector<vector<int>>chessMap;//如chessMap[3][5]表示棋盘第三行第五列的落子情况
 	bool playerFlag;//表示现在该哪一方落子，true:该黑棋落子； flase:该白棋落子
 	void updateGameMap(ChessPos* pos);
+	bool checkWin();//检查输赢的函数，若胜负已分，则返回true
+	ChessPos lastPos;//定义最后的落子点
 };
 

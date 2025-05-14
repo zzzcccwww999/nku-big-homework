@@ -6,6 +6,7 @@ ChessGame::ChessGame(Man* man, AI* ai, Chess* chess)
 	this->ai = ai;
 	this->chess = chess;
 	man->init(chess);
+	ai->init(chess);
 }
 
 void ChessGame::play()

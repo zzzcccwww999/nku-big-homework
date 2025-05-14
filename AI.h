@@ -8,5 +8,9 @@ public:
 private:
 	Chess* chess;
 	vector<vector<int>>scoreMap;
+
+private:
+	void caculateScore();
+	ChessPos think();
 };
 
